@@ -3,6 +3,8 @@ package com.cgc.service;
 import com.cgc.dto.Expose;
 import com.cgc.dto.SeckillExecution;
 import com.cgc.entity.Seckill;
+import com.cgc.exception.RepeatKillException;
+import com.cgc.exception.SeckillCloseException;
 import com.cgc.exception.SeckillException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,11 +37,22 @@ public class SeckillServiceTest {
 
     @Test
     public void exportSeckillUrl() throws Exception {
-        Expose expose = seckillService.exportSeckillUrl(1013);
-        logger.info("expose:{}",expose);
-        /*
-         * Expose{expose=true, md5='cfa4ea86d333336a8a19666efc02e46e', seckillId=1000, now=0, begin=0, end=0}
-         */
+        int id = 1010;
+        Expose expose = seckillService.exportSeckillUrl(id);
+        if (expose.isExpose()){
+            logger.info("expose:{}",expose);
+            try {
+                SeckillExecution seckill = seckillService.executeSeckill(id, 17876253432L, expose.getMd5());
+                logger.info("seckill:{}",seckill);
+            } catch (RepeatKillException e) {
+                logger.error(e.getMessage());
+            } catch (SeckillCloseException e) {
+                logger.error(e.getMessage());
+            }
+        } else {
+            logger.warn("expose:{}",expose);
+        }
+
     }
 
     @Test

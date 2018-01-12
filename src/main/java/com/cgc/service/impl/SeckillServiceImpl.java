@@ -54,12 +54,12 @@ public class SeckillServiceImpl implements SeckillService {
         if (seckill == null) {
             return new Expose(false, id);
         }
-//        Date begin = seckill.getBeginTime();
-//        Date end = seckill.getEndTime();
-//        Date now = new Date();
-//        if (now.getTime() < begin.getTime() || now.getTime() > end.getTime()) {
-//            return new Expose(false, id, now.getTime(), begin.getTime(), end.getTime());
-//        }
+        Date begin = seckill.getBeginTime();
+        Date end = seckill.getEndTime();
+        Date now = new Date();
+        if (now.getTime() < begin.getTime() || now.getTime() > end.getTime()) {
+            return new Expose(false, id, now.getTime(), begin.getTime(), end.getTime());
+        }
         String md5 = getMD5(id);
         return new Expose(true, md5, id);
     }
