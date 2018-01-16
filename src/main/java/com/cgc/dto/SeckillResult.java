@@ -24,4 +24,16 @@ public class SeckillResult<T> {
         this.error = error;
         this.data = data;
     }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public T getData() {
+        return data;
+    }
 }
