@@ -42,7 +42,7 @@ public class SeckillServiceImpl implements SeckillService {
     }
 
     public List<Seckill> getSeckillList() {
-        return seckillDao.queryAll(0,7);
+        return seckillDao.queryAll(0,30);
     }
 
     public Seckill getSeckillById(Integer id) {
@@ -77,7 +77,11 @@ public class SeckillServiceImpl implements SeckillService {
             throw new SeckillException("seckill data rewrite");
         }
         try {
-            //执行秒杀操作，减库存+购买行为
+            //执行秒杀操作，查找库存剩余量+减库存+购买行为
+            int number = seckillDao.queryById(id).getNumber();
+            if (number <= 0){
+                throw new SeckillCloseException("seckill is closed");
+            }
             Date now = new Date();
             int updateCount = seckillDao.reduceNumber(id, now);
             if (updateCount <= 0) {

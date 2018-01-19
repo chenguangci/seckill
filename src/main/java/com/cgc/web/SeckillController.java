@@ -63,6 +63,7 @@ public class SeckillController {
         return result;
     }
 
+    //获取秒杀地址
     @RequestMapping(value = "/{seckillId}/{key}/execution", method = RequestMethod.POST,
             produces = {"application/json;charset=UTF-8"})
     @ResponseBody

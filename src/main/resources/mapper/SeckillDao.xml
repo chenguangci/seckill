@@ -16,7 +16,7 @@
     <select id="queryAll" resultType="Seckill">
         SELECT seckill_id,seckill_name,number,create_time,begin_time,end_time
         FROM seckill
-        ORDER BY create_time DESC
+        ORDER BY create_time ASC
         LIMIT #{begin},#{number}
     </select>
 </mapper>
